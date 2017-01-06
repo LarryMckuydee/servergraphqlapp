@@ -18,7 +18,8 @@ QueryType = GraphQL::ObjectType.define do
   end
 
   field :company, CompanyType, "Company information for" do
-    argument :id, types.ID
+    # make it compulsory to have ID else will run into cannot find Company with 'id'=
+    argument :id, !types.ID
     resolve -> (obj, args, ctx) {
       Company.find(args[:id])
     }
